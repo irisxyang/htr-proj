@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+ Copyright 2021 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<html>
+  <head>
+    <title>PenPal: A Note Transcriber</title>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>PenPal: A Notes Transcriber</h1>
+
+    <p>
+      Scroll down to see your extracted text transcripts, accompanied by any
+      extracted sketches!
+    </p>
+    <a href="{{ url_for('index') }}"
+      >Or, click here to upload a new set of notes!</a
+    >
+
+    {% for transcript in all_transcripts %}
+    <h3>PAGE {{ loop.index }}</h3>
+    <h5>Transcript:</h5>
+    {% for line in transcript %}
+    <p>{{ line }}</p>
+    {% endfor %}
+    <h5>PAGE {{ loop.index }} SKETCHES</h5>
+    {% if not all_sketches[loop.index-1] %}
+    <p>No sketches extracted.</p>
+    {% endif %} {% for sketch in all_sketches[loop.index-1] %}
+    <img
+      src="data:image/png;base64,{{sketch}}"
+      alt="Could not display extracted sketch"
+    />
+    {% endfor %}
+    <div></div>
+
+    {% endfor %}
+  </body>
+</html>

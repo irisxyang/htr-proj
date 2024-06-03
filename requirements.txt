@@ -1,0 +1,6 @@
+Flask
+gunicorn
+google-cloud-vision
+numpy
+opencv-python-headless
+scipy
